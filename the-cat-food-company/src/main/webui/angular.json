@@ -57,6 +57,17 @@
               "optimization": false,
               "extractLicenses": false,
               "sourceMap": true
+            },
+            "dev2": {
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.dev2.ts"
+                }
+              ],
+              "optimization": false,
+              "extractLicenses": false,
+              "sourceMap": true
             }
           },
           "defaultConfiguration": "production"
@@ -69,6 +80,9 @@
             },
             "development": {
               "buildTarget": "the-cat-food-company-ui:build:development"
+            },
+            "dev2": {
+              "buildTarget": "the-cat-food-company-ui:build:dev2"
             }
           },
           "defaultConfiguration": "development"
