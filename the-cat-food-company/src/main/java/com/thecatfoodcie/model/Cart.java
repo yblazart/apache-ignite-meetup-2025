@@ -1,5 +1,6 @@
 package com.thecatfoodcie.model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -14,7 +15,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class Cart {
+public class Cart implements Serializable {
 
     @Builder.Default
     private Map<String,CartItem> cartItems =new HashMap<>();
@@ -47,7 +48,7 @@ public class Cart {
     @AllArgsConstructor
     @NoArgsConstructor
     @Builder
-    public static class CartItem {
+    public static class CartItem implements Serializable {
         private String code;
         private int quantity;
     }

@@ -2,30 +2,45 @@ package com.thecatfoodcie.services;
 
 import com.thecatfoodcie.model.Cart;
 import com.thecatfoodcie.model.Cart.CartItem;
-
+import jakarta.annotation.PostConstruct;
 import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.inject.Inject;
+import lombok.SneakyThrows;
 import lombok.extern.jbosslog.JBossLog;
+import org.apache.ignite.Ignite;
+import org.apache.ignite.IgniteCache;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @ApplicationScoped
 @JBossLog
 public class CartService {
+    @Inject
+    Ignite ignite;
 
-    private final Map<String, Cart> carts = new HashMap<>();
+    private IgniteCache<String, Cart> igniteCarts;
 
-    public void addOrRemoveProductToCart(String email, String code,int quantity) {
-        log.info("Adding or removing product to cart: " + email + " " + code + " = " + quantity);
+    @PostConstruct
+    @SneakyThrows
+    public void init() {
+        igniteCarts = ignite.getOrCreateCache("carts");
+    }
+
+    @SneakyThrows
+    public void addOrRemoveProductToCart(String email, String code, int quantity) {
         Cart cart = getCart(email);
         cart.addRemoveProduct(code, quantity);
+        igniteCarts.put(email, cart);
     }
 
+    @SneakyThrows
     private Cart getCart(String email) {
-        return carts.computeIfAbsent(email, k -> new Cart());
+        if ( !igniteCarts.containsKey(email) )
+            igniteCarts.put(email, new Cart());
+        return igniteCarts.get(email);
     }
 
+    @SneakyThrows
     public List<CartItem> getCartItems(String email) {
         return getCart(email).listItems();
     }
