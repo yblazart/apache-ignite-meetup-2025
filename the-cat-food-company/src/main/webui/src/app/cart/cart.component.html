@@ -1,0 +1,27 @@
+<div class="cart-container">
+  <h3>Panier</h3>
+  <div *ngIf="cartItems.length === 0">
+    Votre panier est vide.
+  </div>
+  <div *ngIf="cartItems.length > 0">
+    <div *ngFor="let item of cartItems" class="cart-item">
+      <img [src]="'/assets/images/' + item.catFood.imagePath" alt="{{ item.catFood.name }}" class="cart-item-image" width="30" height="80">
+      <div class="cart-item-details">
+        <div class="cart-item-name">{{ item.catFood.name }}</div>
+        <div class="cart-item-quantity">
+          Quantité: {{ item.quantity }}
+          <button mat-icon-button (click)="addToCart(item)">
+            <mat-icon>add</mat-icon>
+          </button>
+          <button mat-icon-button (click)="removeFromCart(item)">
+            <mat-icon>remove</mat-icon>
+          </button>
+        </div>
+        <div class="cart-item-total"> {{ item.catFood.price * item.quantity }} €</div>
+      </div>
+    </div>
+    <div class="cart-total">
+      Total du panier: {{ getTotal() }} €
+    </div>
+  </div>
+</div>

@@ -1,0 +1,13 @@
+/* You can add global styles to this file, and also import other style files */
+
+.app-header {
+  background-color: #1976d2;
+  padding: 15px 0;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  color: white;
+}
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }

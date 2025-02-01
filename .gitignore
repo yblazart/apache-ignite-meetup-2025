@@ -1,0 +1,55 @@
+# Compiled class file
+*.class
+
+# Log file
+*.log
+
+# Package Files #
+*.jar
+*.war
+*.ear
+*.zip
+*.tar.gz
+*.rar
+
+# Maven #
+target/
+pom.xml.tag
+pom.xml.backup
+pom.xml.versionsBackup
+pom.xml.nextBackup
+mvn-wrapper.properties
+.mvn/wrapper/maven-wrapper.jar
+.mvn/wrapper/dists
+
+# IntelliJ IDEA #
+.idea/
+*.iws
+*.iml
+*.ipr
+
+# Eclipse #
+.classpath
+.project
+.settings/
+bin/
+
+# NetBeans #
+nbproject/
+
+# Gradle #
+.gradle/
+build/
+settings.gradle
+gradle-app.setting
+gradle-build.setting
+
+# Temp files
+*.tmp
+
+# OS X
+.DS_Store
+
+# Java error files
+hs_err_pid*
+

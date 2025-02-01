@@ -1,0 +1,10 @@
+Crée une image docker à partir de apacheignite/ignite:2.16.0-jdk11
+
+Dans cette image tu dois récuperer le zip suivant : https://www.gridgain.com/media/control-center-agent/control-center-agent-2.16.0.0.zip
+
+Et extraire son contenu dans /opt/ignite/apache-ignite de l'image docker.
+
+Une fois cette image construite, upload là sur docker hub sous le nom yblazartsciam/apache-ignite:2.16.0-jdk11-nebula avec le compte ayant pour nom d'utilisateur 'yblazartsciam' 
+et demande moi le mot de passe.
+
+
