@@ -27,6 +27,6 @@ public class CartService {
     }
 
     public List<CartItem> getCartItems(String email) {
-        return getCart(email).getItems();
+        return getCart(email).listItems();
     }
 }

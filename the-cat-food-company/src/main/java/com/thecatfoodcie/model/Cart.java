@@ -17,23 +17,30 @@ import lombok.NoArgsConstructor;
 public class Cart {
 
     @Builder.Default
-    private Map<String,CartItem> items=new HashMap<>();
+    private Map<String,CartItem> cartItems =new HashMap<>();
 
     public void addRemoveProduct(String productCode,int quantity) {
-        CartItem item = items.get(productCode);
+        checkItems();
+        CartItem item = cartItems.get(productCode);
         if (item != null) {
             item.setQuantity(item.getQuantity() + quantity);
             if (item.getQuantity() <= 0) {
-                items.remove(productCode);
+                cartItems.remove(productCode);
             }
         } else if (quantity > 0) {
-            items.put(productCode, CartItem.builder().code(productCode).quantity(quantity).build());
+            cartItems.put(productCode, CartItem.builder().code(productCode).quantity(quantity).build());
         }
 
     }
 
-    public List<CartItem> getItems() {
-        return new ArrayList<>(items.values());
+    private void checkItems() {
+        if ( cartItems ==null)
+            cartItems =new HashMap<>();
+    }
+
+    public List<CartItem> listItems() {
+        checkItems();
+        return new ArrayList<>(cartItems.values());
     }
 
     @Data
