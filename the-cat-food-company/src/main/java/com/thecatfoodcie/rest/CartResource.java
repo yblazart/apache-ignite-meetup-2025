@@ -17,6 +17,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.extern.jbosslog.JBossLog;
+import org.apache.ignite.Ignite;
+import org.apache.ignite.IgniteCache;
 
 import java.util.List;
 
@@ -27,7 +29,11 @@ import java.util.List;
 public class CartResource {
 
     @Inject
+    Ignite ignite;
+
+    @Inject
     CartService cartService;
+
 
     @POST
     public void addToOrRemoveFromCart(CartActionRequest request) {
@@ -42,13 +48,18 @@ public class CartResource {
         List<Cart.CartItem> cartItems = cartService.getCartItems(email);
         log.info("Getting cart for email: '" + email+"' : " + cartItems);
         return cartItems.stream()
-                .map(item -> buildObject(item))
+                .map(this::buildObject)
                 .toList();
     }
 
+    private IgniteCache<String,CatFood> getCatFoodCache() {
+        return ignite.cache("catFoodCache");
+    }
+
     private CartItemWithDescription buildObject(CartItem item) {
+        log.info(" -> Look for CatFood with code: " + item.getCode());
         return CartItemWithDescription.builder()
-                .catFood(CatFood.find("code=?1",item.getCode()).firstResult())
+                .catFood(getCatFoodCache().get(item.getCode()))
                 .quantity(item.getQuantity())
                 .build();
     }

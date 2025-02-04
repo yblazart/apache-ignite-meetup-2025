@@ -1,5 +1,6 @@
 package com.thecatfoodcie.rest;
 
+import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
@@ -7,11 +8,22 @@ import jakarta.ws.rs.core.Response;
 import java.util.List;
 
 import com.thecatfoodcie.model.CatFood;
+import org.apache.ignite.Ignite;
 
 @Path("/api/cat-foods")
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
 public class CatFoodResource {
+
+    @Inject
+    Ignite ignite;
+
+    @Path("/refresh-cache")
+    @GET
+    public void refreshCache() {
+        ignite.cache("catFoodCache").clear();
+        ignite.cache("catFoodCache").loadCache(null);
+    }
 
     @GET
     public List<CatFood> list() {
@@ -61,4 +73,6 @@ public class CatFoodResource {
         entity.delete();
         return Response.noContent().build();
     }
+
+
 }
